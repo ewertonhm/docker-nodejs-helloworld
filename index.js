@@ -7,6 +7,7 @@ var PORT = process.env.PORT || DEFAULT_PORT;
 // App
 var app = express();
 app.get('/', function (req, res) {
+  console.log(req);
   res.send('Hello World\n');
 });
 
