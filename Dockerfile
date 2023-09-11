@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM node:lts-buster-slim
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install --no-install-recommends -y curl dirmngr gnupg apt-transport-https ca-certificates
