@@ -21,7 +21,6 @@ const logger = (options) =>
 var app = express();
 app.use(logger({ level: 'INFO' }));
 app.get('/', function (req, res) {
-  console.log(req);
   res.send('Hello World\n');
 });
 
