@@ -12,6 +12,7 @@ ADD . /web
 WORKDIR /web
 # Install app dependencies
 RUN npm install
+RUN npm install dd-trace
 
 EXPOSE  8080
 ENTRYPOINT ["nodejs", "./index.js"]

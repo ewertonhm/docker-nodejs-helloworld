@@ -1,4 +1,6 @@
 var express = require('express');
+const tracer = require('dd-trace');
+const formats = require('dd-trace/ext/formats');
 
 // Constants
 var DEFAULT_PORT = 8080;
@@ -7,14 +9,20 @@ var PORT = process.env.PORT || DEFAULT_PORT;
 // logger middleware
 const logger = (options) =>
 (req, res, next) => { 
-  const timestamp = new Date().toISOString(); 
+    const { level } = options;
+    const span = tracer.scope().active();
+    const time = new Date().toISOString();
     const { method, url, ip } = req; 
-      console.log(`
-          ${timestamp} 
-          ${options.level} 
-          ${method} ${url} 
-          ${ip}`); 
-        next(); 
+    const message = `${method} ${url} ${ip}`
+    const record = { time, level, message };
+
+
+    if (span) {
+        tracer.inject(span.context(), formats.LOG, record);
+    }
+
+    console.log(JSON.stringify(record));
+    next(); 
   };  
 
 // App
